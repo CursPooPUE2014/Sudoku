@@ -38,6 +38,10 @@ public class GenerarSudoku{
 		boolean totCorrecte=true;
 		int intents=0;
 		int cont=0;
+		
+		long time_start, time_end;
+		time_start = System.currentTimeMillis();
+		
 		do {
 			r= new Random();
 			intents++;
@@ -53,14 +57,17 @@ public class GenerarSudoku{
 		} while (!totCorrecte );
 		imprimir();
 		if (SUPER_DEBUG ){
+			time_end = System.currentTimeMillis();
 			
-			System.out.println(" nºintents= " + intents);
+			System.out.println(" nºintents= " + intents + " en " + (time_end - time_start) + " milisegons" );
 			
 		}
 		
 	}
 	
-	
+	public int[][] getCuadricula(){
+		return cuadricula;
+	}
 	
 	/*
 	 * 
