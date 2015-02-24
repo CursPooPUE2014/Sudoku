@@ -11,13 +11,17 @@ import java.awt.BorderLayout;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 public class Sudoku {
 
 	private JFrame frame;
 	private JTable tableSudoku;
 	private JTextField textField;
 	
-	private final static int TAMANY_QUADRICULA=9;  //9X9
+	
+	private static int TAMANY_QUADRICULA=9;  //9X9
 
 	/**
 	 * Launch the application.
@@ -38,7 +42,16 @@ public class Sudoku {
 	/**
 	 * Create the application.
 	 */
+	public Sudoku( int tamanyQuadricula) {
+		
+		TAMANY_QUADRICULA=tamanyQuadricula;
+		initialize();
+		
+		//afegirValorsInicials();
+		//generarTaulaSudoku();
+	}
 	public Sudoku() {
+		
 		initialize();
 		//afegirValorsInicials();
 		//generarTaulaSudoku();
@@ -54,23 +67,38 @@ public class Sudoku {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				frame.setVisible(false);
+				//contexto.setVisible(true);
+			}
+		});
+		frame.setBounds(400, 500, 450, 300);
+		
 		
 		tableSudoku = new JTable();
 		//tableSudoku.setModel(new DefaultTableModel(generarTaulaSudoku(), TAMANY_QUADRICULA));
 		
-		tableSudoku.setModel(new ModeloTablaSudoku());
+		ModeloTablaSudoku tms=new ModeloTablaSudoku();
+		GenerarSudoku sudokuInicial = new GenerarSudoku(TAMANY_QUADRICULA);
+		tms.setQuadricula(sudokuInicial.getCuadricula());
+		
+		tableSudoku.setModel(tms);
+		
+		
+		
 		//formatejarColumnes();
 		frame.getContentPane().add(tableSudoku, BorderLayout.CENTER);
 		
-		
+		frame.setVisible(true);
 	}
+	
 	private void formatejarColumnes(){
 		
 		for (int i = 0; i < TAMANY_QUADRICULA; i++) {
 		    tableSudoku.getColumnModel().getColumn(i).setWidth(5);
 		}
 	}
-
+	
 }

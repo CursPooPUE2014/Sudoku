@@ -18,22 +18,28 @@ public class GenerarSudoku{
 	private static final boolean DEBUG = false;
 	private static final boolean SUPER_DEBUG = true;
 	
-	private final static int TAMANY_QUADRICULA=9;
+	private static int TAMANY_QUADRICULA=9;
 	
 	private int[][] cuadricula=new int[TAMANY_QUADRICULA][TAMANY_QUADRICULA];
 	
 	private Random r;
+	
+	
 	
 	public static void main(String[] args) {
 		GenerarSudoku.generar();
 	}
 	
 	public static void generar() {
-		new GenerarSudoku();
+		
+		new GenerarSudoku(9);
 		
 	}
 	
-	public GenerarSudoku(){
+	
+	public GenerarSudoku(int tamany){	
+		
+		TAMANY_QUADRICULA=tamany;
 		r= new Random();
 		boolean totCorrecte=true;
 		int intents=0;
@@ -51,6 +57,7 @@ public class GenerarSudoku{
 			if (SUPER_DEBUG && cont>1000){
 				imprimir();
 				System.out.println(" n튷ntents= " + intents);
+				SudokuLog.imprimir(" n튷ntents= " + intents);
 				cont=0;
 			}
 			totCorrecte=generarTaulaSudoku();
@@ -60,11 +67,13 @@ public class GenerarSudoku{
 			time_end = System.currentTimeMillis();
 			
 			System.out.println(" n튷ntents= " + intents + " en " + (time_end - time_start) + " milisegons" );
-			
+			SudokuLog.imprimir(" n튷ntents= " + intents + " en " + (time_end - time_start) + " milisegons" );
 		}
 		
 	}
 	
+	
+
 	public int[][] getCuadricula(){
 		return cuadricula;
 	}
@@ -96,6 +105,7 @@ public class GenerarSudoku{
 			for (int j=0; j<TAMANY_QUADRICULA; j++){
 				if (DEBUG){
 					System.out.println("Buscant numero per posicio: [" + i + "] [" + j + "]: ...");
+					//SudokuLog.imprimir("Buscant numero per posicio: [" + i + "] [" + j + "]: ...");
 				}
 			
 				totCorrecte= colocarNumeroEn(i,j);
@@ -128,6 +138,7 @@ public class GenerarSudoku{
 			numeroAcolocar = generaNumeroAleatori();
 			if (DEBUG){
 				System.out.println("Numero aleatori generat: " + numeroAcolocar );
+				//SudokuLog.imprimir("Numero aleatori generat: " + numeroAcolocar );
 			}
 			
 			
@@ -187,10 +198,13 @@ public class GenerarSudoku{
 		for (int i=0; i<TAMANY_QUADRICULA;i++){
 			for (int j=0; j<TAMANY_QUADRICULA;j++){
 				System.out.print((cuadricula[i][j]==0)?"n ":cuadricula[i][j] +" ");
+				//SudokuLog.imprimir((cuadricula[i][j]==0)?"n ":cuadricula[i][j] +" ");
 			}
 			System.out.println();
+			//SudokuLog.imprimir("\n");
 		}
 		System.out.println();
+		//SudokuLog.imprimir("\n");
 	}
 	
 	

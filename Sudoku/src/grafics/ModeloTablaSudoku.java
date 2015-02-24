@@ -20,8 +20,9 @@ public class ModeloTablaSudoku extends AbstractTableModel{
 	
 	public ModeloTablaSudoku(){
 		
-		GenerarSudoku sudokuInicial = new GenerarSudoku();
-		this.cuadricula= sudokuInicial.getCuadricula();
+	}
+	public void setQuadricula(int[][] cuadri){
+		this.cuadricula=cuadri;
 	}
 
 	@Override
